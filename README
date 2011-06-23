@@ -1,2 +1,12 @@
-= Uniquify
+= ThumbFu
+
 Ruby gem for generating a page thumbnail using www.bitpixels.com
+
+= Installation
+
+  gem install thumb_fu
+
+= Usage
+
+  thumb = ThumbFu::Thumb.new('YOUR_API_KEY', 'http://google.com')
+  thumb.save('image.jpg') # returns false, if thumbnail image not ready
