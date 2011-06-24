@@ -1,13 +1,13 @@
 require 'open-uri'
 require 'digest/md5'
-module ThumbFu  
+module ThumbFu
   class Thumb
     attr_accessor :url, :api_key, :width
 
     def initialize(api_key, url, options = {})
       @api_key = api_key
       @url = url
-      @width = options[:width] || 200
+      @width = options[:width] || 100
       @image = nil
     end
 
@@ -47,8 +47,12 @@ module ThumbFu
     end
     
     def not_ready_hashsum
-      image_path = File.join(File.dirname(__FILE__), '..', 'images', 'not_ready.jpg')
-      Digest::MD5.hexdigest(open(image_path).read)
+      Digest::MD5.hexdigest(not_ready_image)
+    end
+    
+    def not_ready_image
+      path = File.join(File.dirname(__FILE__), '..', 'images', "not_ready_#{@width}.jpg")
+      open(path).read
     end
   end
 end
