@@ -17,13 +17,18 @@ module ThumbFu
 
     def image
       generate unless generated?
+      @image.seek(0)
       @image
+    end
+    
+    def image_data
+      image.read
     end
     
     def save(path)
       return false unless ready?
       open(path, 'wb') do |file|
-        file << image
+        file << image_data
       end
     end
     
@@ -33,7 +38,7 @@ module ThumbFu
     
     protected
     def generate
-      @image = open(url).read
+      @image = open(url)
     rescue
       false
     end
@@ -43,7 +48,7 @@ module ThumbFu
     end
     
     def image_hashsum
-      Digest::MD5.hexdigest(image)
+      Digest::MD5.hexdigest(image_data)
     end
     
     def not_ready_hashsum
